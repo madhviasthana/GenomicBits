@@ -1,0 +1,81 @@
+You see a DNA string like:
+T C G A T T A C
+Then sliding "windows" of 3 letters like:
+TCG, CGA, GAT, etc.
+
+What it means:
+A k-mer is a substring of length k from a DNA sequence.
+Here, k = 3 → we call them 3-mers.
+You slide one letter at a time and take the next 3 letters.
+
+====================
+Same T C G A T T A C
+You count how often each 3-letter piece appears.
+
+What it means:
+For each possible 3-mer (like AAA, AAC, …, TTT) you count how many times it appears.
+
+You can turn DNA into a vector of numbers (just like word counts in NLP).
+
+====================
+k-mer vector = like bag-of-words
+Just shows if a 3-mer is present (1) or not (0)
+
+What it means:
+You don't even need exact counts — just know if a k-mer exists.
+
+It's similar to how we process text in Natural Language Processing.
+
+DNA is treated like a sentence made up of "genetic words".
+
+===============
+31-mers and sequencing errors.
+Success depends on getting error-free 31-mers.
+
+🧠 What it means:
+When sequencing DNA, some reads have errors.
+
+But if a 31-mer appears often in the data → it’s likely real (part of the genome).
+
+Uses probability to calculate how many reads must be correct to trust it.
+
+Think of 31-mers like puzzle pieces — if a piece appears many times, it's probably part of the real picture.
+
+================
+Define f(x) = how many times a k-mer x appears.
+
+Use Hamming Distance ≤ e to find approximate matches.
+
+What it means:
+If a k-mer x appears only once, it's unique (great for mapping).
+
+If it appears many times, it’s repetitive.
+
+(k, e)-mappability = How many k-mers are similar (within e differences)
+
+Like matching misspelled words: CAT and CUT are one letter apart (distance = 1)
+
+====================
+Use 2 bits per base:
+A = 00, C = 01, G = 10, T = 11
+
+TTATACGT → 1111001100011011 (bitstring)
+
+Fit small k-mers into integers (like 32-bit or 64-bit)
+
+What it means:
+Computers don’t store “A”, “C”, “G”, “T” as text — they use numbers.
+
+So we convert each base into 2 bits, and pack them together.
+
+It's like compressing DNA into a tiny binary box for fast searching.
+
+======================
+NumPy supports different integer sizes: int8, int16, int32, etc.
+
+What it means:
+You can pick how many bits you use to store your k-mers.
+
+16-mers can fit in 32 bits → so use np.uint32 for storage.
+
+=====================
